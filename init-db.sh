@@ -8,7 +8,10 @@ psql -h localhost -d postgres -U postgres <<-EOSQL
 	ALTER USER starterapp PASSWORD 'starterapp';
 	GRANT ALL PRIVILEGES ON DATABASE starterapp TO starterapp;
 	ALTER role starterapp in DATABASE starterapp set search_path='starterapp';
-psql -v ON_ERROR_STOP=1 -U postgres -d postgres -h localhost <<-EOSQL
+EOSQL	
+
+
+psql -h localhost -d postgres -U postgres -v ON_ERROR_STOP=1 <<-EOSQL
 \c starterapp;
 CREATE SCHEMA IF NOT EXISTS starterapp AUTHORIZATION starterapp;
 EOSQL
