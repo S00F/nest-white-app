@@ -11,18 +11,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigurationService } from './configuration/configuration.service';
 import { CacheService } from './cache/cache.service';
 
-function awsS3config(
-  configurationService: ConfigurationService,
-): AwsS3Configuration {
-  return {
-    AWS_BUCKET_NAME: configurationService.AWS_BUCKET_NAME,
-    AWS_ACCESS_KEY_ID: configurationService.AWS_ACCESS_KEY_ID,
-    AWS_END_POINT: configurationService.AWS_END_POINT,
-    AWS_REGION: configurationService.AWS_REGION,
-    AWS_SECRET_ACCESS_KEY: configurationService.AWS_SECRET_ACCESS_KEY,
-  };
-}
-
 const providers = [
   {
     provide: ConfigurationService,
@@ -34,20 +22,6 @@ const providers = [
       'DB_DATABASE',
       'DB_SCHEMA',
     ]),
-  },
-  {
-    provide: AwsS3Client,
-    useFactory: (configurationService: ConfigurationService) => {
-      return new AwsS3Client(awsS3config(configurationService));
-    },
-    inject: [ConfigurationService],
-  },
-  {
-    provide: AwsS3EmailTemplate,
-    useFactory: (configurationService: ConfigurationService) => {
-      return new AwsS3EmailTemplate(awsS3config(configurationService));
-    },
-    inject: [ConfigurationService],
   },
   CacheService,
 ];
