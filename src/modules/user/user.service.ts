@@ -18,12 +18,22 @@ export class UserService {
     return param;
   }
 
-  async getUsers() {
-    const address = await this.getAddress('PARIS');
+  async getUsersByAdress(adress:string) {
+    const address = await this.getAddress(adress);
     Logger.log('**** This is the cached address value **** : ', address);
     return this.userRepository.find({
       where: { address: address },
     });
+  }
+
+  async getUsersById(id:number) {
+    return this.userRepository.find({
+      where: { id },
+    });
+  }
+
+  async getAllUsers() {
+    return this.userRepository.find();
   }
 
   async addUser(userDto: UserDto) {

@@ -26,16 +26,20 @@ async function bootstrap() {
     cors: true,
   });
 
+
+ 
+  
+
   const configurationService = app
     .select(SharedModule)
     .get(ConfigurationService);
 
   // Swagger
   const options = new DocumentBuilder()
-    .setTitle('WhiteAppNestJS')
-    .setDescription('The WhiteAppNestJS API description')
+    .setTitle('API Standard')
+    .setDescription('API Standard description')
     .setVersion('1.0')
-    .addTag('WhiteAppNestJS')
+    .addTag('API Standard')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
@@ -48,6 +52,7 @@ async function bootstrap() {
 
   // Configs
   app.setGlobalPrefix(configurationService.GLOBAL_PREFIX || '');
+
 
   // Filters
   app.useGlobalFilters(new HttpExceptionFilter());
